@@ -33,13 +33,13 @@
 
   //button pin initialize
   const int button1pin = 0;
-  const int button2pin = 1;
+  const int button2pin = 13;
   const int button3pin = 6;
 
   //ledpin initialize
-  const int led1pin = 9;
+  const int led1pin = 7;
   const int led2pin = 8;
-  const int led3pin = 7;
+  const int led3pin = 9;
 
   //Vars for overall variable types
   int state =0;
@@ -94,11 +94,12 @@ void statezero(){
     lcd.print("    Settings    ");
     lcd.print("   Field Mode   ");
   }
-  else if(buttonState2==LOW && buttonState1==HIGH && buttonState3==HIGH ){
+  else if(buttonState2==LOW && buttonState1==HIGH && buttonState3==HIGH ){  
+      delay(500);
       state=5;
       randomSeed(analogRead(0));
       randomLED=random(0,2);
-      randomTime=random(5000,12000);
+      randomTime=random(1000,3000);
       delay(randomTime);
       ledOn(randomLED);
       int timeLit=millis();
@@ -106,11 +107,14 @@ void statezero(){
         buttonState1=digitalRead(button1pin);   
         buttonState2=digitalRead(button2pin);   
         buttonState3=digitalRead(button3pin);   
+        Serial.print(buttonState1);
+        Serial.print(buttonState2);
+        Serial.print(buttonState3);
 
 
         if(randomLED==0 && buttonState1==LOW && buttonState2==HIGH && buttonState3==HIGH){
           int timepressed=millis();
-          if(timepressed-timeLit<=300){
+          if(timepressed-timeLit<=1000){
             state=8;
             break;
           }
@@ -122,7 +126,7 @@ void statezero(){
         
         else if(randomLED==1 && buttonState1==HIGH && buttonState2==LOW && buttonState3==HIGH){
           int timepressed=millis();
-          if(timepressed-timeLit<=300){
+          if(timepressed-timeLit<=1000){
             state=8;
             break;
           }
@@ -134,7 +138,7 @@ void statezero(){
 
         else if(randomLED==2 && buttonState1 ==HIGH && buttonState2==HIGH && buttonState3==LOW){
           int timepressed=millis();
-          if(timepressed-timeLit<=300){
+          if(timepressed-timeLit<=1000){
             state=8;
             break;
           }
@@ -142,6 +146,10 @@ void statezero(){
             state=6;
             break;
           }
+        }
+
+        else if(buttonState1==HIGH && buttonState2==HIGH && buttonState3==HIGH){
+          continue;
         }
         else{
           state=7;
@@ -249,6 +257,7 @@ void loop() {
     buttonState3=digitalRead(button3pin);
   switch(state){
     case(0):
+    //delay(1000);
       statezero();
       break;
 
@@ -258,7 +267,8 @@ void loop() {
 
     case(6):
       lcd.clear();
-      lcd.print("    TOO SLOW    ");
+      lcd.print("    TOO SLOW  ");
+      lcd.setCursor(0,1);
       lcd.print("   TEST FAILED");
       state=0;
       break;
@@ -275,9 +285,9 @@ void loop() {
       lcd.clear();
       lcd.print("  TEST PASSED   ");
       
-      digitalWrite(led1pin,HIGH);
-      digitalWrite(led2pin,HIGH);
-      digitalWrite(led3pin,HIGH);
+      //digitalWrite(led1pin,HIGH);
+      //digitalWrite(led2pin,HIGH);
+      //digitalWrite(led3pin,HIGH);
       delay(30000);
       state=9;
       break;
