@@ -1,6 +1,6 @@
 # Reactionyzer
 
-#Welcome to Reactionyzer, the reaction time-based breathalyzer!
+Welcome to Reactionyzer, the reaction time-based breathalyzer!
 
 A traditional breathalyzer is not accurate and does not provide an accurate 
 readout of how drunk a person is. Not only this it does not provide a measure
@@ -11,7 +11,7 @@ in a persons car to test that they are not inebriated. Field mode is meant
 for use by a law enforcement officer to test a person that they have pulled
 over. 
 
-#Installation and Use Instructions: 
+Installation and Use Instructions: 
 Field Use: 
 	1: Turn on the device by plugging in a power source e.g. external battery. 
 	2: Press the left and right buttons on the front of the device at the same
