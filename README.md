@@ -46,7 +46,7 @@ Car Mode:
 	8: Now the device is ready to use. Have the driver press the centre button.   
 		After a random time a random led will turn on and the driver will need   
 		to press the correct button.   
-	7: Depending on whether the reaction was fast enough <400ms the screen   
+	9: Depending on whether the reaction was fast enough <400ms the screen   
 		report pass or fail as well as the reaction time if it is fast  
 		enough. If the reaction was fast enough, the car's ignition system will  
 		unlock  
