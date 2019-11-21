@@ -29,6 +29,8 @@
   const int led1pin = 7;
   const int led2pin = 8;
   const int led3pin = 9;
+  
+  const int carPowerPin = 11;
 
   //Vars for overall variable types
   int state =0; //set to initial state
@@ -43,6 +45,8 @@
   int buttonState1=LOW;
   int buttonState2=LOW;
   int buttonState3=LOW;
+  
+  int carPowerPinState=LOW;
 
   int button2Pressed=0;
 
@@ -89,7 +93,7 @@ void statezero(){
         buttonState2=digitalRead(button2pin);   
         buttonState3=digitalRead(button3pin);   
         
-        if(randomLED==0 && buttonState1==LOW && buttonState2==HIGH && buttonState3==HIGH){
+        if(randomLED==2 && buttonState1==LOW && buttonState2==HIGH && buttonState3==HIGH){
           int timepressed=millis();
           reactionTime=timepressed-timeLit;
           if(timepressed-timeLit<=500){
@@ -115,7 +119,7 @@ void statezero(){
           }
         }
 
-        else if(randomLED==2 && buttonState1 ==HIGH && buttonState2==HIGH && buttonState3==LOW){
+        else if(randomLED==0 && buttonState1 ==HIGH && buttonState2==HIGH && buttonState3==LOW){
           int timepressed=millis();
           reactionTime=timepressed-timeLit;
           if(timepressed-timeLit<=500){
@@ -202,15 +206,15 @@ void screenPrinting(){
   if(mode==1){
     
     digitalWrite(led1pin,HIGH);
-    delay(500);
+    delay(300);
     digitalWrite(led2pin,HIGH);
-    delay(500);
+    delay(300);
     digitalWrite(led3pin,HIGH);
-    delay(2000);
+    delay(1000);
     digitalWrite(led3pin,LOW);
-    delay(500);
-    digitalWrite(led2pin,HIGH);
-    delay(500);
+    delay(300);
+    digitalWrite(led2pin,LOW);
+    delay(300);
     digitalWrite(led1pin,LOW);
     
     lcd.print("PERSON SOBRE");
@@ -218,12 +222,13 @@ void screenPrinting(){
     lcd.clear();
     lcd.print("PERSON SOBRE");
     lcd.setCursor(0,1);
-    lcd.print(reactionTime-50);
+    lcd.print(reactionTime);
     lcd.setCursor(4,1);
     lcd.print("MS");
   }
   else if(mode==0){
     lcd.print("CAR TURNED ON");
+    digitalWrite(carPowerPin,HIGH);
   }
   else{
     lcd.print("NO MODE SET");  
@@ -243,10 +248,13 @@ void setup() {
   pinMode(led1pin,OUTPUT);
   pinMode(led2pin,OUTPUT);
   pinMode(led3pin,OUTPUT);
-
+  pinMode(carPowerPin,OUTPUT);
+  
   digitalWrite(led1pin,LOW);
   digitalWrite(led2pin,LOW);
   digitalWrite(led3pin,LOW);
+  
+  digitalWrite(carPowerPin,LOW);
   
   button2Pressed=0;
 
@@ -296,6 +304,7 @@ void loop() {
       screenPrinting();
       
       delay(10000);
+       digitalWrite(carPowerPin,LOW);
       state=9;
       break;
     case(9):
